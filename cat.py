@@ -195,11 +195,11 @@ def showItems(catalog_id):
 @app.route('/catalog/<int:catalog_id>/<int:item_id>/item/')
 def showDetails(catalog_id, item_id):
     items = session.query(Item).filter_by(id=item_id).all()
+    catalog = session.query(Catalog).filter_by(id=catalog_id).one()
     if 'username' not in login_session:
         return render_template('details.html', items=items)
     else:
-        return render_template('detailsuser.html', items=items)
-
+        return render_template('detailsuser.html', items=items, catalog=catalog, catalog_id=catalog_id)
 
 
 # Create a new item
@@ -208,21 +208,47 @@ def newItem(catalog_id):
     if 'username' not in login_session:
         return redirect('/login')
     if request.method == 'POST':
-        newItem = Item(
-            name=request.form['name'], catalog_id=catalog_id)
+        newItem = Item(name=request.form['name'], description=request.form['description'], price=request.form['price'], featured=request.form['featured'], catalog_id=catalog_id)
         session.add(newItem)
         flash('New Item %s Successfully Created' % newItem.name)
         session.commit()
-        return redirect(url_for('showItems'))
+        return redirect(url_for('showItems', catalog_id=catalog_id))
     else:
         return render_template('itemadd.html')
 
 
+# Delete a item
+@app.route('/catalog/<int:catalog_id>/<int:item_id>/delete/', methods=['GET', 'POST'])
+def deleteItem(catalog_id, item_id):
+    itemToDelete = session.query(Item).filter_by(id=item_id).one()
+    if 'username' not in login_session:
+        return redirect('/login')
+    if request.method == 'POST':
+        session.delete(itemToDelete)
+        session.commit()
+        return redirect(url_for('showItems', catalog_id=catalog_id))
+    else:
+        return render_template('itemdelete.html', item=itemToDelete, catalog_id=catalog_id)
 
 
-
-
-
+# Edit an item
+@app.route('/catalog/<int:catalog_id>/<int:item_id>/edit/', methods=['GET', 'POST'])
+def editItem(catalog_id, item_id):
+    editedItem = session.query(Item).filter_by(id=item_id).one()
+    if 'username' not in login_session:
+        return redirect('/login')
+    if request.method == 'POST':
+        if request.form['name']:
+            editedItem.name = request.form['name']
+        if request.form['description']:
+            editedItem.description = request.form['description']
+        if request.form['price']:
+            editedItem.price = request.form['price']
+        if request.form['featured']:
+            editedItem.featured = request.form['featured']
+        return redirect(url_for('showItems', catalog_id=catalog_id))
+    else:
+        return render_template('itemedit.html', item=editedItem, catalog_id=catalog_id)
 
 
 

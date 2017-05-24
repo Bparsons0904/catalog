@@ -9,6 +9,14 @@ Details of Items for users
             <h4>{{each_item.description}}</h4>
             <h4>{{each_item.price}}</h4>
             <h4>{{each_item.featured}}</h4>
+            <a href="{{url_for('deleteItem', catalog_id = catalog.id, item_id=each_item.id )}}">
+              <button class="btn btn-default" id="new-item">
+                <span class="glyphicon glyphicon-glass" aria-hidden="true"></span>Delete Item
+              </button>
+            <a href="{{url_for('editItem', catalog_id = catalog.id, item_id=each_item.id )}}">
+              <button class="btn btn-default" id="new-item">
+                <span class="glyphicon glyphicon-glass" aria-hidden="true"></span>Edit Item
+              </button>
           </div>
         <div class="col-md-1"></div>
       </div>
