@@ -8,7 +8,8 @@ Details of Items for users
             <h3>{{each_item.name}}</h3>
             <h4>{{each_item.description}}</h4>
             <h4>{{each_item.price}}</h4>
-            <h4>{{each_item.featured}}</h4>
+            <h4>Featured Item: {{each_item.featured}}</h4>
+            <img src="/static/images/{{each_item.image}}" alt="product image" style="width:304px;height:228px;">
             <a href="{{url_for('deleteItem', catalog_id = catalog.id, item_id=each_item.id )}}">
               <button class="btn btn-default" id="new-item">
                 <span class="glyphicon glyphicon-glass" aria-hidden="true"></span>Delete Item

@@ -244,6 +244,8 @@ def editItem(catalog_id, item_id):
             editedItem.description = request.form['description']
         if request.form['price']:
             editedItem.price = request.form['price']
+        if request.form['image']:
+            editedItem.image = request.form['image']
         if request.form['featured']:
             editedItem.featured = request.form['featured']
         return redirect(url_for('showItems', catalog_id=catalog_id))
