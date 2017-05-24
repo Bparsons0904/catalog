@@ -1,6 +1,5 @@
 # cd /c/Users/bpars/"fullstack-nanodegree-vm"/vagrant/catalog
 
-
 from flask import Flask, render_template, request, redirect, jsonify, url_for, flash
 from sqlalchemy import create_engine, asc
 from sqlalchemy.orm import sessionmaker
@@ -16,6 +15,13 @@ from flask import make_response
 import requests
 
 app = Flask(__name__)
+
+# Connect to Database and create database session
+engine = create_engine('sqlite:///catalog.db')
+Base.metadata.bind = engine
+
+DBSession = sessionmaker(bind=engine)
+session = DBSession()
 
 CLIENT_ID = json.loads(
     open('client_secret.json', 'r').read())['web']['client_id']
@@ -103,8 +109,6 @@ def gconnect():
     login_session['picture'] = data['picture']
     login_session['email'] = data['email']
 
-#    login_session['provider'] = 'google'
-
     output = ''
     output += '<h1>Welcome, '
     output += login_session['username']
@@ -116,9 +120,8 @@ def gconnect():
     print "done!"
     return output
 
-    # DISCONNECT - Revoke a current user's token and reset their login_session
 
-
+# DISCONNECT - Revoke a current user's token and reset their login_session
 @app.route('/gdisconnect')
 def gdisconnect():
     access_token = login_session['access_token']
@@ -150,22 +153,6 @@ def gdisconnect():
     	response.headers['Content-Type'] = 'application/json'
     	return response
 
-# Connect to Database and create database session
-engine = create_engine('sqlite:///catalog.db')
-Base.metadata.bind = engine
-
-DBSession = sessionmaker(bind=engine)
-session = DBSession()
-
-# Show all catagories
-@app.route('/')
-@app.route('/catalog/')
-def showCatalog():
-    catalog = session.query(Catalog).order_by(asc(Catalog.name))
-    if 'username' not in login_session:
-        return render_template('catalog.html', catalog=catalog)
-    else:
-        return render_template('cataloguser.html', catalog=catalog)
 
 # disconnect user
 @app.route('/disconnect')
@@ -179,6 +166,45 @@ def disconnect():
 
 
 
+
+# Show all catagories
+@app.route('/')
+@app.route('/catalog/')
+def showCatalog():
+    catalog = session.query(Catalog).order_by(asc(Catalog.name))
+    if 'username' not in login_session:
+        return render_template('catalog.html', catalog=catalog)
+    else:
+        return render_template('cataloguser.html', catalog=catalog)
+
+
+# Items View
+@app.route('/catalog/<int:catalog_id>/')
+@app.route('/catalog/<int:catalog_id>/item/')
+def showCategory(catalog_id):
+    catalog = session.query(Catalog).filter_by(id=catalog_id).one()
+    items = session.query(Item).filter_by(
+        catalog_id=catalog_id).all()
+    if 'username' not in login_session:
+        return render_template('items.html', items=items, catalog=catalog)
+    else:
+        return render_template('itemsuser.html', items=items, catalog=catalog)
+
+
+# Create a new item
+@app.route('/catalog/<int:catalog_id>/add/', methods=['GET', 'POST'])
+def newCatalog():
+    if 'username' not in login_session:
+        return redirect('/login')
+    if request.method == 'POST':
+        newCatalog = Catalog(
+            name=request.form['name'], user_id=login_session['user_id'])
+        session.add(newCatalog)
+        flash('New Catalog %s Successfully Created' % newCatalog.name)
+        session.commit()
+        return redirect(url_for('showCatalog'))
+    else:
+        return render_template('newRestaurant.html')
 
 
 
