@@ -1,0 +1,21 @@
+This is the item page for users
+
+<a href="{{url_for('newItem', catalog_id = catalog.id )}}">
+  <button class="btn btn-default" id="new-item">
+    <span class="glyphicon glyphicon-glass" aria-hidden="true"></span>Add New Item
+  </button>
+
+<div>
+  {% for each_item in items %}
+    <a href = "{{url_for('showDetails', catalog_id=catalog.id, item_id = each_item.id)}}">
+      <div class="row">
+        <div class="col-md-1"></div>
+          <div class="col-md-10 restaurant-list">
+            <h3>{{each_item.name}}</h3>
+            <h4>{{each_item.description}}</h4>
+          </div>
+        <div class="col-md-1"></div>
+      </div>
+    </a>
+  {% endfor %}
+</div>

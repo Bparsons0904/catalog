@@ -191,14 +191,16 @@ def showItems(catalog_id):
         return render_template('itemsuser.html', items=items, catalog=catalog)
 
 # Items Detail View
-@app.route('/catalog/<int:catalog_id>/<int:item_id>/')
-@app.route('/catalog/<int:catalog_id>/<int:item_id>/item/')
-def showDetails(catalog_id, item_id):
-    items = session.query(Item).filter_by(id=item_id).all()
+@app.route('/catalog/<int:catalog_id>/')
+@app.route('/catalog/<int:catalog_id>/item/')
+def showDetails(item_id):
+    catalog = session.query(Catalog).filter_by(id=catalog_id).one()
+    items = session.query(Item).filter_by(
+        id=item_id).all()
     if 'username' not in login_session:
-        return render_template('details.html', items=items)
+        return render_template('details.html', items=items, catalog=catalog)
     else:
-        return render_template('detailsuser.html', items=items)
+        return render_template('detailsuser.html', items=items, catalog=catalog)
 
 
 

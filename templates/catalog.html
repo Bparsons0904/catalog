@@ -15,19 +15,6 @@ WTF
 			<h1>Catagories</h1>
 		</div>
 	</div>
-
-	<div class = 'flash'>
-		      {% with messages = get_flashed_messages() %}
-      {% if messages %}
-
-        <ul>
-        {% for message in messages %}
-            <li> <strong> {{ message }} </strong> </li>
-        {% endfor %}
-        </ul>
-        {% endif %}
-    {% endwith %}
-
 </div>
 
 
@@ -40,7 +27,7 @@ WTF
 		<div class="col-md-1"></div>
 	</div>
 	{% for e in catalog %}
-		<a href = "{{url_for('showCategory', catalog_id = e.id)}}">
+		<a href = "{{url_for('showItems', catalog_id = e.id)}}">
 			<div class="row">
 				<div class="col-md-1"></div>
 					<div class="col-md-10 restaurant-list">
