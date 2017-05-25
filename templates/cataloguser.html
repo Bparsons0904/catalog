@@ -1,34 +1,28 @@
-This is the user catalog page
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
 
-<div class="row banner main">
-  <div class="col-md-1"></div>
-  <div class="col-md-11 padding-none">
-    <h1>Catagories</h1>
+<div class="row lower-banner">
+  <div class="col-md-12 lower-banner">
+    <h1>Bob's Computer Super Store</h1>
   </div>
 </div>
 
-  <div class="col-md-1"></div>
-</div>
-{% for each_category in catalog %}
-  <a href = "{{url_for('showItems', catalog_id = each_category.id)}}">
-    <div class="row">
-      <div class="col-md-1"></div>
-        <div class="col-md-10 restaurant-list">
-          <h3>{{each_category.name}}</h3>
+<div class="row">
+    <div class="col-md-6">
+      {% for each_category in catalog %}
+        <div class="category-list">
+          <a href = "{{url_for('showItems', catalog_id = each_category.id)}}"><h3>{{each_category.name}}</h3></a>
         </div>
-      <div class="col-md-1"></div>
+      {% endfor %}
     </div>
-  </a>
-{% endfor %}
+    <div class="col-md-6">
+      {% for each_featured in featured %}
+        <div class="featured-list">
+          <a href = "{{url_for('showDetails', catalog_id=each_featured.catalog_id, item_id = each_featured.id)}}"><h3>{{each_featured.name}}</h3></a>
+        </div>
+      {% endfor %}
+    </div>
+</div>
 
-{% for each_featured in featured %}
- <a href = "{{url_for('showDetails', catalog_id=each_featured.catalog_id, item_id = each_featured.id)}}">
-   <div class="row">
-     <div class="col-md-1"></div>
-       <div class="col-md-10 restaurant-list">
-         <h3>{{each_featured.name}}</h3>
-       </div>
-     <div class="col-md-1"></div>
-   </div>
- </a>
- {% endfor %}
+{% endblock %}
