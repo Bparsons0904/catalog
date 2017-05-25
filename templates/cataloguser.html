@@ -20,3 +20,15 @@ This is the user catalog page
     </div>
   </a>
 {% endfor %}
+
+{% for each_featured in featured %}
+ <a href = "{{url_for('showDetails', catalog_id=each_featured.catalog_id, item_id = each_featured.id)}}">
+   <div class="row">
+     <div class="col-md-1"></div>
+       <div class="col-md-10 restaurant-list">
+         <h3>{{each_featured.name}}</h3>
+       </div>
+     <div class="col-md-1"></div>
+   </div>
+ </a>
+ {% endfor %}

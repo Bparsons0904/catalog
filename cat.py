@@ -172,10 +172,11 @@ def disconnect():
 @app.route('/catalog/')
 def showCatalog():
     catalog = session.query(Catalog).order_by(asc(Catalog.name))
+    featured = session.query(Item).filter_by(featured='yes').all()
     if 'username' not in login_session:
-        return render_template('catalog.html', catalog=catalog)
+        return render_template('catalog.html', catalog=catalog, featured=featured)
     else:
-        return render_template('cataloguser.html', catalog=catalog)
+        return render_template('cataloguser.html', catalog=catalog, featured=featured)
 
 
 # Items View
