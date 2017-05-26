@@ -1,32 +1,50 @@
 body {
-  background-color: #e0e0e0
+  background-color: #E0E0E0;
+}
+
+.button {
+  background-color: white;
+  width: 150px;
+  height: 75px;
+  margin-top: 25px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+}
+
+.items {
+  background-color: white;
+  padding: 20px;
+  margin-bottom: 5px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  text-align: center;
+  margin-right: 5px;
+}
+
+.items:hover {
+ background-color: #ffa726;
+ padding: 20px;
+}
+
+.main-column {
+ padding: 20px;
+ margin-bottom: 5px;
+ text-align: center;
 }
 
 .category-list {
- background-color: #E3F2FD;
  padding: 20px;
  margin-bottom: 5px;
+ background-color: white;
+ box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
 }
 
 .category-list:hover {
- background-color: #2196F3;
+ background-color: #ffa726;
  padding: 20px;
-}
-
-.featured-list {
- background-color: #E3F2FD;
- padding: 20px;
- margin-bottom: 5px;
- margin-left: 25px
 }
 
 .test {
-  background-color: black;
-}
-
-.featured-list:hover {
- background-color: #2196F3;
- padding: 20px;
+  border-color: red;
+  border-width: 5px;
 }
 
 .lower-banner {
@@ -63,9 +81,9 @@ h1 {
 }
 
 h2 {
-	font-size: 24px;
-	color: #42C3C9;
+	font-size: 28px;
 	line-height: 29px;
+  font-weight: bold;
 }
 
 h3 {

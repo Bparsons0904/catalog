@@ -2,14 +2,11 @@
 {% block content %}
 {% include "header.html" %}
 
-<div class="row lower-banner">
-  <div class="col-md-12 lower-banner">
-    <h1>Bob's Computer Super Store</h1>
-  </div>
-</div>
-
 <div class="row">
     <div class="col-md-6">
+      <div class="main-column">
+        <h2>Catagories</h2>
+      </div>
       {% for each_category in catalog %}
         <div class="category-list">
           <a href = "{{url_for('showItems', catalog_id = each_category.id)}}"><h3>{{each_category.name}}</h3></a>
@@ -17,8 +14,11 @@
       {% endfor %}
     </div>
     <div class="col-md-6">
+      <div class="main-column">
+        <h2>Featured Items</h2>
+      </div>
       {% for each_featured in featured %}
-        <div class="featured-list">
+        <div class="category-list">
           <a href = "{{url_for('showDetails', catalog_id=each_featured.catalog_id, item_id = each_featured.id)}}"><h3>{{each_featured.name}}</h3></a>
         </div>
       {% endfor %}

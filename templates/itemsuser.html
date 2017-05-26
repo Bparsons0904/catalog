@@ -1,20 +1,21 @@
-This is the item page for users
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
 
-<a href="{{url_for('newItem', catalog_id = catalog.id )}}">
-  <button class="btn btn-default" id="new-item">
-    <span class="glyphicon glyphicon-glass" aria-hidden="true"></span>Add New Item
-  </button>
+{% for each_item in items %}
+  <div class="col-md-3">
+    <div class="items">
+      <a href = "{{url_for('showDetails', catalog_id=catalog.id, item_id = each_item.id)}}"><h3>{{each_item.name}}</h3></a>
+    </div>
+  </div>
+{% endfor %}
 
-<div>
-  {% for each_item in items %}
-    <a href = "{{url_for('showDetails', catalog_id=catalog.id, item_id = each_item.id)}}">
-      <div class="row">
-        <div class="col-md-1"></div>
-          <div class="col-md-10 restaurant-list">
-            <h3>{{each_item.name}}</h3>
-          </div>
-        <div class="col-md-1"></div>
-      </div>
-    </a>
-  {% endfor %}
+
+<div class="row col-md-12">
+  <a href="{{url_for('newItem', catalog_id = catalog.id )}}">
+    <button class="button">Add New Item</button>
 </div>
+
+
+
+{% endblock %}
