@@ -206,6 +206,7 @@ def showDetails(catalog_id, item_id):
 # Create a new item
 @app.route('/catalog/<int:catalog_id>/item/add/', methods=['GET', 'POST'])
 def newItem(catalog_id):
+    catalog = session.query(Catalog).filter_by(id=catalog_id).one()
     if 'username' not in login_session:
         return redirect('/login')
     if request.method == 'POST':
@@ -213,9 +214,9 @@ def newItem(catalog_id):
         session.add(newItem)
         flash('New Item %s Successfully Created' % newItem.name)
         session.commit()
-        return redirect(url_for('showItems', catalog_id=catalog_id))
+        return redirect(url_for('showItems', catalog_id=catalog_id, catalog=catalog))
     else:
-        return render_template('itemadd.html')
+        return render_template('itemadd.html', catalog=catalog)
 
 
 # Delete a item

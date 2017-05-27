@@ -7,6 +7,14 @@ h2#details-name {
   font-size: 30px;
 }
 
+.form {
+  margin-bottom: 15px;
+}
+
+.login-banner {
+  height: 50px;
+}
+
 .details-row {
   margin-top: 50px;
 }
@@ -14,6 +22,13 @@ h2#details-name {
 .disconnect {
   height: 50px;
   float: right;
+}
+
+.login {
+  height: 35px;
+  float: right;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .featured {
@@ -37,7 +52,7 @@ h2#details-name {
 .button {
   background-color: white;
   width: 150px;
-  height: 75px;
+  height: 50px;
   margin-top: 25px;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
 }
@@ -98,6 +113,11 @@ h2#details-name {
   margin-top: 50px;
   margin-bottom: 50px;
   text-align: center;
+}
+
+#result {
+  text-align: center;
+  color: #e88c06;
 }
 
 * {

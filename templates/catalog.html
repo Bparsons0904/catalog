@@ -1,39 +1,28 @@
-This is the main page.  Public Catalog
-WTF
-	<div class="row top-menu">
-		<div class="col-md-10"></div>
-		<div class="col-md-2 text-right">
-			<a href="{{url_for('showLogin')}}">Click Here to Log in </a>
-		</div>
-	</div>
-	<div class="row divider blue">
-		<div class="col-md-12"></div>
-	</div>
-	<div class="row banner main">
-		<div class="col-md-1"></div>
-		<div class="col-md-11 padding-none">
-			<h1>Catagories</h1>
-		</div>
-	</div>
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+
+<div class="row">
+    <div class="col-md-6">
+      <div class="main-column">
+        <h2>Categories</h2>
+      </div>
+      {% for each_category in catalog %}
+        <div class="category-list">
+          <a href = "{{url_for('showItems', catalog_id = each_category.id)}}"><h3>{{each_category.name}}</h3></a>
+        </div>
+      {% endfor %}
+    </div>
+    <div class="col-md-6">
+      <div class="main-column">
+        <h2>Featured Items</h2>
+      </div>
+      {% for each_featured in featured %}
+        <div class="category-list">
+          <a href = "{{url_for('showDetails', catalog_id=each_featured.catalog_id, item_id = each_featured.id)}}"><h3>{{each_featured.name}}</h3></a>
+        </div>
+      {% endfor %}
+    </div>
 </div>
 
-
-
-	<div class="row padding-top padding-bottom">
-		<div class="col-md-1"></div>
-		<div class="col-md-10 padding-none">
-
-		</div>
-		<div class="col-md-1"></div>
-	</div>
-	{% for e in catalog %}
-		<a href = "{{url_for('showItems', catalog_id = e.id)}}">
-			<div class="row">
-				<div class="col-md-1"></div>
-					<div class="col-md-10 restaurant-list">
-						<h3>{{e.name}}</h3>
-					</div>
-				<div class="col-md-1"></div>
-			</div>
-		</a>
-	{% endfor %}
+{% endblock %}
