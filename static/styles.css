@@ -2,6 +2,29 @@ body {
   background-color: #E0E0E0;
 }
 
+h2#details-name {
+  margin: 0px;
+  font-size: 30px;
+}
+
+.featured {
+  background-color: #2962ff;
+  width: 200px;
+  height: 75px;
+  margin-top: 25px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+}
+
+.item-details {
+  text-align: center;
+}
+
+.details-image {
+  width: 100%;
+  margin: 0 auto;
+  margin-bottom: 15px;
+}
+
 .button {
   background-color: white;
   width: 150px;
@@ -81,9 +104,10 @@ h1 {
 }
 
 h2 {
-	font-size: 28px;
+  font-family: 'Special Elite', cursive;
+	font-size: 40px;
 	line-height: 29px;
-  font-weight: bold;
+  color: #e88c06;
 }
 
 h3 {
