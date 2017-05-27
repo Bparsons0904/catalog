@@ -10,6 +10,12 @@ h2#details-name {
 .details-row {
   margin-top: 50px;
 }
+
+.disconnect {
+  height: 50px;
+  float: right;
+}
+
 .featured {
   background-color: #2962ff;
   width: 200px;
@@ -78,14 +84,13 @@ h2#details-name {
  background-position: top;
 }
 
-#lower-link {
-  color: white;
+.home {
+  height: 25px;
+  margin-top: 10px;
 }
 
 .upper-banner {
  background-color: #0039cb;
- padding-top: 15px;
- padding-bottom: 15px;
  color: white;
 }
 
