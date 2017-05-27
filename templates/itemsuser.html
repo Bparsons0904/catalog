@@ -2,6 +2,10 @@
 {% block content %}
 {% include "header.html" %}
 
+<div class="item-row">
+  <h2>Available {{catalog.name}}'s</h2>
+</div>
+<div class="col-md-12">
 {% for each_item in items %}
   <div class="col-md-3">
     <div class="items">
@@ -9,7 +13,7 @@
     </div>
   </div>
 {% endfor %}
-
+</div>
 
 <div class="row col-md-12">
   <a href="{{url_for('newItem', catalog_id = catalog.id )}}">

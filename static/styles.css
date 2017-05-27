@@ -7,6 +7,9 @@ h2#details-name {
   font-size: 30px;
 }
 
+.details-row {
+  margin-top: 50px;
+}
 .featured {
   background-color: #2962ff;
   width: 200px;
@@ -36,7 +39,7 @@ h2#details-name {
 .items {
   background-color: white;
   padding: 20px;
-  margin-bottom: 5px;
+  margin-bottom: 25px;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
   text-align: center;
   margin-right: 5px;
@@ -65,17 +68,14 @@ h2#details-name {
  padding: 20px;
 }
 
-.test {
-  border-color: red;
-  border-width: 5px;
-}
-
 .lower-banner {
- background-color: #2962ff;
- color: white;
  vertical-align: middle;
  text-align: center;
- margin-bottom: 25px;
+ margin: 0px;
+ background-image: url("/static/images/banner2.png");
+ background-repeat: no-repeat;
+ background-attachment: fixed;
+ background-position: top;
 }
 
 #lower-link {
@@ -89,6 +89,11 @@ h2#details-name {
  color: white;
 }
 
+.item-row {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  text-align: center;
+}
 
 * {
 	font-family: "Helvetica Neue Bold", Roboto, Helvetica, Arial, sans-serif;
@@ -100,7 +105,9 @@ h1 {
 	font-size: 50px;
 	color: white;
 	line-height: 60px;
-	font-weight: 300;
+	font-weight: 600;
+  margin: 0px;
+  padding: 25px;
 }
 
 h2 {
