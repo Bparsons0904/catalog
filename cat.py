@@ -178,6 +178,13 @@ def showCatalog():
     else:
         return render_template('cataloguser.html', catalog=catalog, featured=featured)
 
+# catalog JSON
+@app.route('/JSON/')
+@app.route('/catalog/JSON/')
+def catalogJSON():
+    catalog = session.query(Catalog).order_by(asc(Catalog.name))
+    featured = session.query(Item).filter_by(featured='yes').all()
+    return jsonify(showCatalog=[i.serialize for i in catalog])
 
 # Items View
 @app.route('/catalog/<int:catalog_id>/')
@@ -191,6 +198,14 @@ def showItems(catalog_id):
     else:
         return render_template('itemsuser.html', items=items, catalog=catalog)
 
+# items JSON
+@app.route('/catalog/<int:catalog_id>/item/JSON/')
+def itemsJSON(catalog_id):
+    catalog = session.query(Catalog).filter_by(id=catalog_id).one()
+    items = session.query(Item).filter_by(
+        catalog_id=catalog_id).all()
+    return jsonify(showItems=[i.serialize for i in items])
+
 # Items Detail View
 @app.route('/catalog/<int:catalog_id>/<int:item_id>/')
 @app.route('/catalog/<int:catalog_id>/<int:item_id>/item/')
@@ -202,6 +217,12 @@ def showDetails(catalog_id, item_id):
     else:
         return render_template('detailsuser.html', items=items, catalog=catalog, catalog_id=catalog_id)
 
+# items detail JSON
+@app.route('/catalog/<int:catalog_id>/<int:item_id>/item/JSON/')
+def itemsJSON(catalog_id, item_id):
+    items = session.query(Item).filter_by(id=item_id).all()
+    catalog = session.query(Catalog).filter_by(id=catalog_id).one()
+    return jsonify(showDetails=[i.serialize for i in items])
 
 # Create a new item
 @app.route('/catalog/<int:catalog_id>/item/add/', methods=['GET', 'POST'])
@@ -216,7 +237,7 @@ def newItem(catalog_id):
         session.commit()
         return redirect(url_for('showItems', catalog_id=catalog_id, catalog=catalog))
     else:
-        return render_template('itemadd.html', catalog=catalog)
+        return render_template('itemadd.html', catalog=catalog, catalog_id=catalog_id)
 
 
 # Delete a item

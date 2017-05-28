@@ -55,6 +55,17 @@ h2#details-name {
   height: 50px;
   margin-top: 25px;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  color: black;
+}
+
+.cancel {
+  background-color: white;
+  width: 150px;
+  height: 50px;
+  margin-top: 25px;
+  margin-left: 25px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  color: black;
 }
 
 .items {

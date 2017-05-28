@@ -1,6 +1,6 @@
 {% extends "main.html" %}
 {% block content %}
-{% include "header.html" %}
+{% include "headeruser.html" %}
 
 <div class="item-row">
   <h2>Add Item for {{catalog.name}} Category</h2>
@@ -22,7 +22,7 @@
     </div>
     <div class="form">
       <label for="image">Image:</label>
-      <input type ="text" maxlength="50" class="form-control" name="name"placeholder="Image Name">
+      <input type ="text" maxlength="50" class="form-control" name="image" placeholder="Image Name">
     </div>
     <div class="form">
       <label for="course">Featured:</label>
@@ -33,9 +33,9 @@
         <label><input type="radio" name="featured" value="no" checked="checked">No</label>
       </div>
     </div>
-    <button type="submit" class="button">Create</button>
+    <button type="submit" class="button col-md-3">Add Item</button>
   </form>
+  <a href = '{{url_for('showItems', catalog_id=catalog_id)}}'><button class="cancel col-md-3"></span>Cancel</button></a>
 </div>
-
 
 {% endblock %}

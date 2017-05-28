@@ -1,14 +1,14 @@
-This is the item delete page
+{% extends "main.html" %}
+{% block content %}
+{% include "headeruser.html" %}
 
 
 <h2> Are you sure you want to delete {{item.name}}? </h2>
 
 <form action="#" method = 'post'>
 
-	<button type="submit" class="btn btn-default delete" id="submit" type="submit">
-	<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>Delete</button>
+	<button type="submit" class="button col-md-3 col-md-offset-1">Delete</button>
 </form>
-  	<a href = '{{url_for('showItems', catalog_id=catalog_id)}}'>
-		<button class="btn btn-default delete">
-		<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel</button>
-	</a>
+  	<a href = '{{url_for('showItems', catalog_id=catalog_id)}}'><button class="cancel col-md-3 col-md-offset-1"></span>Cancel</button></a>
+
+{% endblock %}

@@ -1,49 +1,41 @@
-This is the item edit page
+{% extends "main.html" %}
+{% block content %}
+{% include "headeruser.html" %}
 
-<div class="row divider green">
-  <div class="col-md-12"></div>
+<div class="item-row">
+  <h2>Edit {{item.name}}</h2>
 </div>
-<div class="row banner menu">
-  <div class="col-md-11 col-md-offset-1 padding-none">
-    <h1>Edit Item</h1>
-  </div>
 </div>
-<div class="row">
-  <div class="col-md-6 col-md-offset-1 padding-top">
-    <form action="#" method = "post">
-      <div class="form-group">
-        <label for="name">Name:</label>
-        <input type ="text" maxlength="100" class="form-control" name="name" value="{{item.name }}">
-
-        <label for="description">Description:</label>
-        <textarea class="form-control" maxlength="250" rows="3" name="description">{{item.description}}</textarea>
-
-        <label for="price">Price:</label>
-        <div class="input-group">
-          <div class="input-group-addon">$</div>
-          <input type ="text" maxlength="10" class="form-control" name="price" value="{{item.price}}">
-        </div>
-        <label for="name">Image:</label>
-        <input type ="text" maxlength="100" class="form-control" name="image" value="{{item.image }}">
-        <label for="course">Featured:</label>
-        <div class="radio">
-          <label>
-            <input type="radio" name="featured" value="no">No
-            <input type="radio" name="featured" value="yes">Yes
-          </label>
-        </div>
-        <div class="radio">
-        <button type="submit" class="btn btn-default" id="submit" type="submit">
-        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Save</button>
-      </form>
-
-
-
+<div class="col-md-6 col-md-offset-1 padding-top">
+  <form action="#" method = "post">
+    <div class="form">
+      <label for="name">Name:</label>
+      <input type ="text" maxlength="50" class="form-control" name="name"placeholder="{{item.name}}">
+    </div>
+    <div class="form">
+      <label for="description">Description:</label>
+      <textarea class="form-control" maxlength="250" rows="3" name="description" placeholder="{{item.description}}"></textarea>
+    </div>
+    <div class="form">
+      <label for="price">Price:</label>
+      <input type ="text" class="form-control" maxlength="10" name="price" placeholder="{{item.price}}">
+    </div>
+    <div class="form">
+      <label for="image">Image:</label>
+      <input type ="text" maxlength="50" class="form-control" name="image" placeholder="{{item.image}}">
+    </div>
+    <div class="form">
+      <label for="course">Featured:</label>
+      <div class="radio">
+        <label><input type="radio" name="featured" value="yes">Yes</label>
       </div>
-
-  </div>
+      <div class="radio">
+        <label><input type="radio" name="featured" value="no" checked="checked">No</label>
+      </div>
+    </div>
+    <button type="submit" class="button col-md-3">Edit Item</button>
+  </form>
+  <a href = '{{url_for('showItems', catalog_id=catalog_id)}}'><button class="cancel col-md-3"></span>Cancel</button></a>
 </div>
-<a href = '{{url_for('showItems', catalog_id=catalog_id)}}'>
-<button class="btn btn-default delete">
-<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel</button>
-</a>
+
+{% endblock %}
