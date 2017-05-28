@@ -9,7 +9,7 @@
       </div>
       {% for each_category in catalog %}
         <div class="category-list">
-          <a href = "{{url_for('showItems', catalog_id = each_category.id)}}"><h3>{{each_category.name}}</h3></a>
+          <a href = "{{url_for('showItems', catalog_name = each_category.name)}}"><h3>{{each_category.name}}</h3></a>
         </div>
       {% endfor %}
     </div>
@@ -19,7 +19,7 @@
       </div>
       {% for each_featured in featured %}
         <div class="category-list">
-          <a href = "{{url_for('showDetails', catalog_id=each_featured.catalog_id, item_id = each_featured.id)}}"><h3>{{each_featured.name}}</h3></a>
+          <a href = "{{url_for('showFeatured', catalog_id=each_featured.catalog_id, item_id = each_featured.id)}}"><h3>{{each_featured.name}}</h3></a>
         </div>
       {% endfor %}
     </div>

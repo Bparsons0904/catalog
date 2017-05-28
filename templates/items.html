@@ -9,7 +9,7 @@
 {% for each_item in items %}
   <div class="col-md-3">
     <div class="items">
-      <a href = "{{url_for('showDetails', catalog_id=catalog.id, item_id = each_item.id)}}"><h3>{{each_item.name}}</h3></a>
+      <a href = "{{url_for('showDetails', catalog_name=catalog.name, item_id = each_item.id)}}"><h3>{{each_item.name}}</h3></a>
     </div>
   </div>
 {% endfor %}

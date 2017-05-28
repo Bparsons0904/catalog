@@ -187,10 +187,11 @@ def catalogJSON():
     return jsonify(showCatalog=[i.serialize for i in catalog])
 
 # Items View
-@app.route('/catalog/<int:catalog_id>/')
-@app.route('/catalog/<int:catalog_id>/item/')
-def showItems(catalog_id):
-    catalog = session.query(Catalog).filter_by(id=catalog_id).one()
+@app.route('/catalog/<catalog_name>/')
+@app.route('/catalog/<catalog_name>/item/')
+def showItems(catalog_name):
+    catalog = session.query(Catalog).filter_by(name=catalog_name).one()
+    catalog_id = catalog.id
     items = session.query(Item).filter_by(
         catalog_id=catalog_id).all()
     if 'username' not in login_session:
@@ -207,15 +208,26 @@ def itemsJSON(catalog_id):
     return jsonify(showItems=[i.serialize for i in items])
 
 # Items Detail View
-@app.route('/catalog/<int:catalog_id>/<int:item_id>/')
-@app.route('/catalog/<int:catalog_id>/<int:item_id>/item/')
-def showDetails(catalog_id, item_id):
+@app.route('/catalog/<catalog_name>/<int:item_id>/')
+@app.route('/catalog/<catalog_name>/<int:item_id>/item/')
+def showDetails(catalog_name, item_id):
     items = session.query(Item).filter_by(id=item_id).all()
-    catalog = session.query(Catalog).filter_by(id=catalog_id).one()
+    catalog = session.query(Catalog).filter_by(name=catalog_name).one()
+    catalog_id = catalog.id
     if 'username' not in login_session:
         return render_template('details.html', items=items)
     else:
         return render_template('detailsuser.html', items=items, catalog=catalog, catalog_id=catalog_id)
+
+# Items Featured View
+@app.route('/catalog/<int:catalog_id>/<int:item_id>/')
+@app.route('/catalog/<int:catalog_id>/<int:item_id>/item/')
+def showFeatured(catalog_id, item_id):
+    items = session.query(Item).filter_by(id=item_id).all()
+    catalog = session.query(Catalog).filter_by(id=catalog_id).one()
+    catalog_name = catalog.name
+    showDetails(catalog_name, item_id)
+
 
 # items detail JSON
 @app.route('/catalog/<int:catalog_id>/<int:item_id>/item/JSON/')
