@@ -53,8 +53,8 @@ class Item(Base):
             'name': self.name,
             'description': self.description,
             'id': self.id,
-            'featured': self.price,
-            'image': self.course,
+            'featured': self.featured,
+            'image': self.image,
         }
 
 
