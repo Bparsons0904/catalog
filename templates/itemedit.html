@@ -10,7 +10,7 @@
   <form action="#" method = "post">
     <div class="form">
       <label for="name">Name:</label>
-      <input type ="text" maxlength="50" class="form-control" name="name"placeholder="{{item.name}}">
+      <input type ="text" maxlength="50" class="form-control" name="name" placeholder="{{item.name}}">
     </div>
     <div class="form">
       <label for="description">Description:</label>
@@ -35,7 +35,7 @@
     </div>
     <button type="submit" class="button col-md-2 col-md-offset-1">Save Changes</button>
   </form>
-  <a href = '{{url_for('showItems', catalog_name=catalog_name)}}'><button class="button col-md-2 col-md-offset-1"></span>Cancel</button></a>
+  <a href = '{{url_for('showItems', catalog_name=catalog_name)}}'><button class="button col-md-2 col-md-offset-1">Cancel</button></a>
 </div>
 
 {% endblock %}
