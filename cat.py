@@ -200,9 +200,11 @@ def showItems(catalog_name):
         return render_template('itemsuser.html', items=items, catalog=catalog)
 
 # items JSON
-@app.route('/catalog/<int:catalog_id>/item/JSON/')
-def itemsJSON(catalog_id):
-    catalog = session.query(Catalog).filter_by(id=catalog_id).one()
+@app.route('/catalog/<catalog_name>/JSON/')
+@app.route('/catalog/<catalog_name>/item/JSON/')
+def itemsJSON(catalog_name):
+    catalog = session.query(Catalog).filter_by(name=catalog_name).one()
+    catalog_id = catalog.id
     items = session.query(Item).filter_by(
         catalog_id=catalog_id).all()
     return jsonify(showItems=[i.serialize for i in items])
@@ -230,10 +232,9 @@ def showFeatured(catalog_id, item_id):
 
 
 # items detail JSON
-@app.route('/catalog/<int:catalog_id>/<int:item_id>/item/JSON/')
-def itemsJSON(catalog_id, item_id):
+@app.route('/catalog/<catalog_name>/<int:item_id>/item/JSON/')
+def detailsJSON(catalog_name, item_id):
     items = session.query(Item).filter_by(id=item_id).all()
-    catalog = session.query(Catalog).filter_by(id=catalog_id).one()
     return jsonify(showDetails=[i.serialize for i in items])
 
 # Create a new item
