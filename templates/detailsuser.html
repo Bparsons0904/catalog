@@ -24,9 +24,10 @@
 
 
 {% for each_item in items %}
-<a href="{{url_for('deleteItem', catalog_id = catalog.id, item_id=each_item.id )}}">
-  <button class="button">Delete Item</button>
-<a href="{{url_for('editItem', catalog_id = catalog.id, item_id=each_item.id )}}">
-  <button class="cancel">Edit Item</button>
+<a href="{{url_for('editItem', catalog_name = catalog.name, item_id=each_item.id )}}">
+  <button class="button">Edit Item</button>
+<a href="{{url_for('deleteItem', catalog_name = catalog.name, item_id=each_item.id )}}">
+  <button class="cancel">Delete Item</button>
+
   {% endfor %}
 {% endblock %}

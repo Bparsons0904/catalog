@@ -226,7 +226,7 @@ def showFeatured(catalog_id, item_id):
     items = session.query(Item).filter_by(id=item_id).all()
     catalog = session.query(Catalog).filter_by(id=catalog_id).one()
     catalog_name = catalog.name
-    showDetails(catalog_name, item_id)
+    return showDetails(catalog_name, item_id)
 
 
 # items detail JSON
@@ -237,9 +237,10 @@ def itemsJSON(catalog_id, item_id):
     return jsonify(showDetails=[i.serialize for i in items])
 
 # Create a new item
-@app.route('/catalog/<int:catalog_id>/item/add/', methods=['GET', 'POST'])
-def newItem(catalog_id):
-    catalog = session.query(Catalog).filter_by(id=catalog_id).one()
+@app.route('/catalog/<catalog_name>/item/add/', methods=['GET', 'POST'])
+def newItem(catalog_name):
+    catalog = session.query(Catalog).filter_by(name=catalog_name).one()
+    catalog_id = catalog.id
     if 'username' not in login_session:
         return redirect('/login')
     if request.method == 'POST':
@@ -247,28 +248,30 @@ def newItem(catalog_id):
         session.add(newItem)
         flash('New Item %s Successfully Created' % newItem.name)
         session.commit()
-        return redirect(url_for('showItems', catalog_id=catalog_id, catalog=catalog))
+        return redirect(url_for('showItems', catalog_name=catalog_name, catalog=catalog))
     else:
-        return render_template('itemadd.html', catalog=catalog, catalog_id=catalog_id)
+        return render_template('itemadd.html', catalog=catalog, catalog_name=catalog_name)
 
 
 # Delete a item
-@app.route('/catalog/<int:catalog_id>/<int:item_id>/delete/', methods=['GET', 'POST'])
-def deleteItem(catalog_id, item_id):
+@app.route('/catalog/<catalog_name>/<int:item_id>/delete/', methods=['GET', 'POST'])
+def deleteItem(catalog_name, item_id):
     itemToDelete = session.query(Item).filter_by(id=item_id).one()
+    catalog = session.query(Catalog).filter_by(name=catalog_name).one()
+    catalog_id = catalog.id
     if 'username' not in login_session:
         return redirect('/login')
     if request.method == 'POST':
         session.delete(itemToDelete)
         session.commit()
-        return redirect(url_for('showItems', catalog_id=catalog_id))
+        return redirect(url_for('showItems', catalog_name=catalog_name))
     else:
-        return render_template('itemdelete.html', item=itemToDelete, catalog_id=catalog_id)
+        return render_template('itemdelete.html', item=itemToDelete, catalog_name=catalog_name)
 
 
 # Edit an item
-@app.route('/catalog/<int:catalog_id>/<int:item_id>/edit/', methods=['GET', 'POST'])
-def editItem(catalog_id, item_id):
+@app.route('/catalog/<catalog_name>/<int:item_id>/edit/', methods=['GET', 'POST'])
+def editItem(catalog_name, item_id):
     editedItem = session.query(Item).filter_by(id=item_id).one()
     if 'username' not in login_session:
         return redirect('/login')
@@ -283,9 +286,9 @@ def editItem(catalog_id, item_id):
             editedItem.image = request.form['image']
         if request.form['featured']:
             editedItem.featured = request.form['featured']
-        return redirect(url_for('showItems', catalog_id=catalog_id))
+        return redirect(url_for('showItems', catalog_name=catalog_name))
     else:
-        return render_template('itemedit.html', item=editedItem, catalog_id=catalog_id)
+        return render_template('itemedit.html', item=editedItem, catalog_name=catalog_name)
 
 
 

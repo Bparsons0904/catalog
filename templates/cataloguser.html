@@ -19,7 +19,7 @@
       </div>
       {% for each_featured in featured %}
         <div class="category-list">
-          <a href = "{{url_for('showDetails', catalog_id=each_featured.catalog_id, item_id = each_featured.id)}}"><h3>{{each_featured.name}}</h3></a>
+          <a href = "{{url_for('showFeatured', catalog_id=each_featured.catalog_id, item_id = each_featured.id)}}"><h3>{{each_featured.name}}</h3></a>
         </div>
       {% endfor %}
     </div>
