@@ -33,9 +33,9 @@
         <label><input type="radio" name="featured" value="no" checked="checked">No</label>
       </div>
     </div>
-    <button type="submit" class="button col-md-3">Add Item</button>
+    <button type="submit" class="button col-md-2 col-md-offset-1">Add Item</button>
   </form>
-  <a href = '{{url_for('showItems', catalog_name=catalog_name)}}'><button class="cancel col-md-3"></span>Cancel</button></a>
+  <a href = '{{url_for('showItems', catalog_name=catalog_name)}}'><button class="button col-md-2 col-md-offset-1"></span>Cancel</button></a>
 </div>
 
 {% endblock %}
