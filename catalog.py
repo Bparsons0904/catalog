@@ -192,8 +192,8 @@ def catalogJSON():
 
 
 # Items View
-@app.route('/catalog/<catalog_name>/')
-@app.route('/catalog/<catalog_name>/item/')
+@app.route('/catalog/<path:catalog_name>/')
+@app.route('/catalog/<path:catalog_name>/item/')
 def showItems(catalog_name):
     catalog = session.query(Catalog).filter_by(name=catalog_name).one()
     catalog_id = catalog.id
@@ -206,8 +206,8 @@ def showItems(catalog_name):
 
 
 # items JSON
-@app.route('/catalog/<catalog_name>/JSON/')
-@app.route('/catalog/<catalog_name>/item/JSON/')
+@app.route('/catalog/<path:catalog_name>/JSON/')
+@app.route('/catalog/<path:catalog_name>/item/JSON/')
 def itemsJSON(catalog_name):
     catalog = session.query(Catalog).filter_by(name=catalog_name).one()
     catalog_id = catalog.id
@@ -217,8 +217,8 @@ def itemsJSON(catalog_name):
 
 
 # Items Detail View
-@app.route('/catalog/<catalog_name>/<int:item_id>/')
-@app.route('/catalog/<catalog_name>/<int:item_id>/item/')
+@app.route('/catalog/<path:catalog_name>/<int:item_id>/')
+@app.route('/catalog/<path:catalog_name>/<int:item_id>/item/')
 def showDetails(catalog_name, item_id):
     items = session.query(Item).filter_by(id=item_id).all()
     catalog = session.query(Catalog).filter_by(name=catalog_name).one()
@@ -242,19 +242,19 @@ def showFeatured(catalog_id, item_id):
 
 
 # items detail JSON
-@app.route('/catalog/<catalog_name>/<int:item_id>/item/JSON/')
+@app.route('/catalog/<path:catalog_name>/<int:item_id>/item/JSON/')
 def detailsJSON(catalog_name, item_id):
     items = session.query(Item).filter_by(id=item_id).all()
     return jsonify(showDetails=[i.serialize for i in items])
 
 
 # Create a new item
-@app.route('/catalog/<catalog_name>/item/add/', methods=['GET', 'POST'])
+@app.route('/catalog/<path:catalog_name>/item/add/', methods=['GET', 'POST'])
 def newItem(catalog_name):
-    catalog = session.query(Catalog).filter_by(name=catalog_name).one()
-    catalog_id = catalog.id
     if 'username' not in login_session:
         return redirect('/login')
+    catalog = session.query(Catalog).filter_by(name=catalog_name).one()
+    catalog_id = catalog.id
     if request.method == 'POST':
         newItem = Item(name=request.form['name'],
                        description=request.form['description'],
@@ -272,14 +272,14 @@ def newItem(catalog_name):
 
 
 # Delete a item
-@app.route('/catalog/<catalog_name>/<int:item_id>/delete/',
+@app.route('/catalog/<path:catalog_name>/<int:item_id>/delete/',
            methods=['GET', 'POST'])
 def deleteItem(catalog_name, item_id):
+    if 'username' not in login_session:
+        return redirect('/login')
     itemToDelete = session.query(Item).filter_by(id=item_id).one()
     catalog = session.query(Catalog).filter_by(name=catalog_name).one()
     catalog_id = catalog.id
-    if 'username' not in login_session:
-        return redirect('/login')
     if request.method == 'POST':
         session.delete(itemToDelete)
         session.commit()
@@ -290,12 +290,12 @@ def deleteItem(catalog_name, item_id):
 
 
 # Edit an item
-@app.route('/catalog/<catalog_name>/<int:item_id>/edit/',
+@app.route('/catalog/<path:catalog_name>/<int:item_id>/edit/',
            methods=['GET', 'POST'])
 def editItem(catalog_name, item_id):
-    editedItem = session.query(Item).filter_by(id=item_id).one()
     if 'username' not in login_session:
         return redirect('/login')
+    editedItem = session.query(Item).filter_by(id=item_id).one()
     if request.method == 'POST':
         if request.form['name']:
             editedItem.name = request.form['name']
