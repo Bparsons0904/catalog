@@ -14,6 +14,7 @@ import httplib2
 import json
 from flask import make_response
 import requests
+from functools import wraps
 
 app = Flask(__name__)
 
@@ -111,6 +112,12 @@ def gconnect():
     login_session['picture'] = data['picture']
     login_session['email'] = data['email']
 
+    # see if user exists, if it doesn't make a new one
+    user_id = getUserID(data["email"])
+    if not user_id:
+        user_id = createUser(login_session)
+    login_session['user_id'] = user_id
+
     output = ''
     output += '<h1>Welcome, '
     output += login_session['username']
@@ -122,6 +129,29 @@ def gconnect():
     flash("you are now logged in as %s" % login_session['username'])
     print "done!"
     return output
+
+
+# User Helper Functions
+def createUser(login_session):
+    newUser = User(name=login_session['username'], email=login_session[
+                   'email'], picture=login_session['picture'])
+    session.add(newUser)
+    session.commit()
+    user = session.query(User).filter_by(email=login_session['email']).one()
+    return user.id
+
+
+def getUserInfo(user_id):
+    user = session.query(User).filter_by(id=user_id).one()
+    return user
+
+
+def getUserID(email):
+    try:
+        user = session.query(User).filter_by(email=email).one()
+        return user.id
+    except:
+        return None
 
 
 # DISCONNECT - Revoke a current user's token and reset their login_session
@@ -166,6 +196,19 @@ def disconnect():
     gdisconnect()
     flash("You have successfully been logged out.")
     return redirect(url_for('showCatalog'))
+
+
+# Check login status
+def login_required(f):
+    @wraps (f)
+    def decorated_function(*args, **kargs):
+        if 'username' not in login_session:
+            return redirect('/login')
+        return f(*args, **kargs)
+    return decorated_function
+
+
+
 
 
 # Show all catagories
@@ -216,20 +259,31 @@ def itemsJSON(catalog_name):
     return jsonify(showItems=[i.serialize for i in items])
 
 
+# Check user status
+def user_required(user_id):
+        if user_id != login_session['user_id']:
+            return False
+        else:
+            return True
+
+
 # Items Detail View
 @app.route('/catalog/<path:catalog_name>/<int:item_id>/')
 @app.route('/catalog/<path:catalog_name>/<int:item_id>/item/')
 def showDetails(catalog_name, item_id):
     items = session.query(Item).filter_by(id=item_id).all()
+    item = session.query(Item).filter_by(id=item_id).one()
     catalog = session.query(Catalog).filter_by(name=catalog_name).one()
     catalog_id = catalog.id
     if 'username' not in login_session:
         return render_template('details.html', items=items)
+    if user_required(item.user_id) == False:
+        return render_template('detailsuser.html', items=items, catalog=catalog,
+                               catalog_id=catalog_id)
     else:
-        return render_template('detailsuser.html',
+        return render_template('detailsowner.html',
                                items=items, catalog=catalog,
                                catalog_id=catalog_id)
-
 
 # Items Featured View
 @app.route('/catalog/<int:catalog_id>/<int:item_id>/')
@@ -250,9 +304,8 @@ def detailsJSON(catalog_name, item_id):
 
 # Create a new item
 @app.route('/catalog/<path:catalog_name>/item/add/', methods=['GET', 'POST'])
+@login_required
 def newItem(catalog_name):
-    if 'username' not in login_session:
-        return redirect('/login')
     catalog = session.query(Catalog).filter_by(name=catalog_name).one()
     catalog_id = catalog.id
     if request.method == 'POST':
@@ -260,7 +313,8 @@ def newItem(catalog_name):
                        description=request.form['description'],
                        price=request.form['price'],
                        featured=request.form['featured'],
-                       catalog_id=catalog_id)
+                       catalog_id=catalog_id,
+                       user_id=login_session['user_id'])
         session.add(newItem)
         flash('New Item %s Successfully Created' % newItem.name)
         session.commit()
@@ -274,12 +328,13 @@ def newItem(catalog_name):
 # Delete a item
 @app.route('/catalog/<path:catalog_name>/<int:item_id>/delete/',
            methods=['GET', 'POST'])
+@login_required
 def deleteItem(catalog_name, item_id):
-    if 'username' not in login_session:
-        return redirect('/login')
     itemToDelete = session.query(Item).filter_by(id=item_id).one()
     catalog = session.query(Catalog).filter_by(name=catalog_name).one()
     catalog_id = catalog.id
+    if user_required(itemToDelete.user_id) == False:
+        return redirect(url_for('showCatalog'))
     if request.method == 'POST':
         session.delete(itemToDelete)
         session.commit()
@@ -292,10 +347,11 @@ def deleteItem(catalog_name, item_id):
 # Edit an item
 @app.route('/catalog/<path:catalog_name>/<int:item_id>/edit/',
            methods=['GET', 'POST'])
+@login_required
 def editItem(catalog_name, item_id):
-    if 'username' not in login_session:
-        return redirect('/login')
     editedItem = session.query(Item).filter_by(id=item_id).one()
+    if user_required(editedItem.user_id) == False:
+        return redirect(url_for('showCatalog'))
     if request.method == 'POST':
         if request.form['name']:
             editedItem.name = request.form['name']

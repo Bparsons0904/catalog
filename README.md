@@ -7,6 +7,7 @@ Installation Instruction
 1. Place contents of catalog along with static and template folders in vagrant folder.
 
 Operating Instruction
+1. Create database by running database_setup.py.
 1. Start project by running catalog.py.
 2. Without logging in, can view available categories, item list, item details and featured items,
 3. Use Google Login to add ability to add, delete and modify items.

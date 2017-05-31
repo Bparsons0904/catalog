@@ -15,6 +15,7 @@
     <h2 id="details-name">{{each_item.name}}</h2>
     <h3>Price: ${{each_item.price}}</h3>
     <h4>{{each_item.description}}</h4>
+    <h4>{{each_item.user_id}}</h4>
     {% if each_item.featured == "yes" %}
     <img class="img-responsive details-image" src="/static/images/featured.png" alt="Featured Product" />
     {% endif %}
@@ -22,12 +23,4 @@
 </div>
 {% endfor %}
 
-
-{% for each_item in items %}
-<a href="{{url_for('editItem', catalog_name = catalog.name, item_id=each_item.id )}}">
-  <button class="button">Edit Item</button>
-<a href="{{url_for('deleteItem', catalog_name = catalog.name, item_id=each_item.id )}}">
-  <button class="cancel">Delete Item</button>
-
-  {% endfor %}
 {% endblock %}
