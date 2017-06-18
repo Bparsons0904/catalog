@@ -1,5 +1,7 @@
 # cd /c/Users/bpars/"fullstack-nanodegree-vm"/vagrant/catalog
 
+# cd /c/Users/bpars/"fullstack-nanodegree-vm"/ubuntu
+
 from flask import Flask, render_template, request
 from flask import redirect, jsonify, url_for, flash
 from sqlalchemy import create_engine, asc
