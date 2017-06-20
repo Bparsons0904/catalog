@@ -37,7 +37,7 @@ class Item(Base):
 
     name = Column(String(80), nullable=False)
     id = Column(Integer, primary_key=True)
-    description = Column(String(250))
+    description = Column(String(500))
     price = Column(String(8))
     featured = Column(String(250))
     image = Column(String(250))
