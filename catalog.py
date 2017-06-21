@@ -1,7 +1,3 @@
-# cd /c/Users/bpars/"fullstack-nanodegree-vm"/vagrant/catalog
-
-# cd /c/Users/bpars/"fullstack-nanodegree-vm"/ubuntu
-
 from flask import Flask, render_template, request
 from flask import redirect, jsonify, url_for, flash
 from sqlalchemy import create_engine, asc
@@ -54,7 +50,7 @@ def gconnect():
 
     try:
         # Upgrade the authorization code into a credentials object
-        oauth_flow = flow_from_clientsecrets('client_secret.json', scope='')
+        oauth_flow = flow_from_clientsecrets('/var/www/catalog/catalog/client_secret.json', scope='')
         oauth_flow.redirect_uri = 'postmessage'
         credentials = oauth_flow.step2_exchange(code)
     except FlowExchangeError:
