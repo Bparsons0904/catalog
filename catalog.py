@@ -310,6 +310,7 @@ def newItem(catalog_name):
         newItem = Item(name=request.form['name'],
                        description=request.form['description'],
                        price=request.form['price'],
+                       image=request.form['image'],
                        featured=request.form['featured'],
                        catalog_id=catalog_id,
                        user_id=login_session['user_id'])

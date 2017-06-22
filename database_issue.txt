@@ -1,0 +1,135 @@
+Edit Item #2 - update image to "corsair", keep featured to "no"
+Edit Item #3 - update image to "crystal", change featured to "no"
+Edit Item #4 - update image to "versa", change featured to "yes"
+
+Checked JSON - Note Item #2 no longer has image name stored.
+
+{
+  "showItems": [
+    {
+      "description": "Carbide Series SPEC-02 is an aggressive gaming PC case with the superior air cooling you need if youre running high-performance GPUs. The cleverly designed interior allows for the included LED-lit front intake fan to draw cold air directly to your graphics cards, and theres room for up to six fans for massive cooling potential.",
+      "featured": "no",
+      "id": 2,
+      "image": null,
+      "name": "Corsair Carbide Series SPEC-02 Redshift"
+    },
+    {
+      "description": "With immaculate tempered glass enclosing the entire chassis, every component of your build is on display for all to see. The CORSAIR Crystal Series 570X provides enough space for virtually any size radiator and support for up to six case fans. With the three included SP120 RGB LED fans and built-in LED controller, you can liven up your build with brilliant lighting effects.",
+      "featured": "no",
+      "id": 3,
+      "image": "crystal",
+      "name": "Corsair Crystal 570X Premium ATX"
+    },
+    {
+      "description": "Ideal for home-computer builders and gamers, with enough space for high-end hardware and expansion. The ample ventilation options, cleanable air filter, and a perforated mesh bezel help to keep the entire system cool and dust-free. Versa H22 combines a manageable frame size with extensive options to customize users computer or gaming system",
+      "featured": "yes",
+      "id": 4,
+      "image": "versa",
+      "name": "Thermaltake Versa H22 Special Edition"
+    }
+  ]
+}
+
+Edit Item #2 - update image to "corsair", keep featured to "no"
+
+Page becomes unresponsive.
+Use "sudo service apache2 reload" to get page working again.
+Recheck JSON, none of the changes made were retained.
+
+{
+  "showItems": [
+    {
+      "description": "Carbide Series SPEC-02 is an aggressive gaming PC case with the superior air cooling you need if youre running high-performance GPUs. The cleverly designed interior allows for the included LED-lit front intake fan to draw cold air directly to your graphics cards, and theres room for up to six fans for massive cooling potential.",
+      "featured": "no",
+      "id": 2,
+      "image": null,
+      "name": "Corsair Carbide Series SPEC-02 Redshift"
+    },
+    {
+      "description": "With immaculate tempered glass enclosing the entire chassis, every component of your build is on display for all to see. The CORSAIR Crystal Series 570X provides enough space for virtually any size radiator and support for up to six case fans. With the three included SP120 RGB LED fans and built-in LED controller, you can liven up your build with brilliant lighting effects.",
+      "featured": "yes",
+      "id": 3,
+      "image": null,
+      "name": "Corsair Crystal 570X Premium ATX"
+    },
+    {
+      "description": "Ideal for home-computer builders and gamers, with enough space for high-end hardware and expansion. The ample ventilation options, cleanable air filter, and a perforated mesh bezel help to keep the entire system cool and dust-free. Versa H22 combines a manageable frame size with extensive options to customize users computer or gaming system",
+      "featured": "no",
+      "id": 4,
+      "image": null,
+      "name": "Thermaltake Versa H22 Special Edition"
+    }
+  ]
+}
+
+Delete Items #2, 3, & 4.
+Recheck JSON
+
+{
+  "showItems": []
+}
+
+Readded new Items, now #28, #29, #30.
+Before checking JSON, noticed the URL now was http://ec2-35-163-150-67.us-west-2.compute.amazonaws.com/catalog/Case/item/?catalog=%3Cdatabase_setup.Catalog+object+at+0x7fd3b64962d0%3E#
+Checked JSON
+
+{
+  "showItems": [
+    {
+      "description": "Carbide Series SPEC-02 is an aggressive gaming PC case with the superior air cooling you need if youre running high-performance GPUs. The cleverly designed interior allows for the included LED-lit front intake fan to draw cold air directly to your graphics cards, and theres room for up to six fans for massive cooling potential.",
+      "featured": "no",
+      "id": 28,
+      "image": "corsair",
+      "name": "Corsair Carbide Series SPEC-02 Redshift ATX "
+    },
+    {
+      "description": "Weve engineered the Crystal 460X RGB to pack all the performance and expandability you need into a beautifully modern and compact case design with vivid illumination from our SP120 RGB LED fans. Put your build on display through beautiful two-panel tempered glass and keep it all running cool and quiet with Direct Airflow technology.",
+      "featured": "no",
+      "id": 29,
+      "image": "crystal",
+      "name": "Corsair Crystal 460X RGB ATX"
+    },
+    {
+      "description": "Ideal for home-computer builders and gamers, with enough space for high-end hardware and expansion. The ample ventilation options, cleanable air filter, and a perforated mesh bezel help to keep the entire system cool and dust-free. Versa H22 combines a manageable frame size with extensive options to customize users computer or gaming system",
+      "featured": "yes",
+      "id": 30,
+      "image": "versa",
+      "name": "Thermaltake Versa H22 Special Edition"
+    }
+  ]
+}
+
+
+Edit Item #30 - change featured to "no"
+Edit Item #28 - update image to "null", change featured to "yes"
+Edit Item #29 - update image to "7700", change featured to "yes"
+
+Page becomes unresponsive.
+Use "sudo service apache2 reload" to get page working again.
+Recheck JSON, none of the changes made were retained.
+
+{
+  "showItems": [
+    {
+      "description": "Carbide Series SPEC-02 is an aggressive gaming PC case with the superior air cooling you need if youre running high-performance GPUs. The cleverly designed interior allows for the included LED-lit front intake fan to draw cold air directly to your graphics cards, and theres room for up to six fans for massive cooling potential.",
+      "featured": "no",
+      "id": 28,
+      "image": "corsair",
+      "name": "Corsair Carbide Series SPEC-02 Redshift ATX "
+    },
+    {
+      "description": "Weve engineered the Crystal 460X RGB to pack all the performance and expandability you need into a beautifully modern and compact case design with vivid illumination from our SP120 RGB LED fans. Put your build on display through beautiful two-panel tempered glass and keep it all running cool and quiet with Direct Airflow technology.",
+      "featured": "no",
+      "id": 29,
+      "image": "crystal",
+      "name": "Corsair Crystal 460X RGB ATX"
+    },
+    {
+      "description": "Ideal for home-computer builders and gamers, with enough space for high-end hardware and expansion. The ample ventilation options, cleanable air filter, and a perforated mesh bezel help to keep the entire system cool and dust-free. Versa H22 combines a manageable frame size with extensive options to customize users computer or gaming system",
+      "featured": "yes",
+      "id": 30,
+      "image": "versa",
+      "name": "Thermaltake Versa H22 Special Edition"
+    }
+  ]
+}
